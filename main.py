@@ -1,3 +1,10 @@
+import Config
+import logging
+
+logging.basicConfig()
+Logger = logging.getLogger(__name__)
+Logger.setLevel(20)
+
 def main():
     print("hello world")
     # TODO: every 15 minutes, get all rules from postgres
