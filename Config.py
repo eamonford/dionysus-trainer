@@ -18,6 +18,9 @@ class Borg:
 class Configuration(Borg):
 	def __init__(self):
 		Borg.__init__(self)
+		self.influxdbHost = os.getenv('INFLUXDB_HOST', "localhost")
+		self.influxdbUsername = os.getenv('INFLUXDB_USERNAME', "root")
+		self.influxdbPassword = os.getenv('INFLUXDB_PASSWORD', "root")
 		self.pgHost = os.getenv('PG_HOST', 'localhost')
 		self.pgUser = os.getenv('PG_USER', 'admin')
 		self.pgPass = os.getenv('PG_PASS', 'password')
