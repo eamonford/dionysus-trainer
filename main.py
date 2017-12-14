@@ -21,10 +21,12 @@ def processRules(args):
     for rule in rules:
         if rule["status"] == "training":
             ruleAge = datetime.now() - rule["created_at"]
-            if ruleAge.days >= 7:
+            if ruleAge.seconds >= 7200:
             # TODO: if it's been one week, get the average moisture for that sensor for the past week
                 print("rule is 1 week old")
-                # influxClient.query("")
+                average = influxClient.query("select mean(value) from moisture where device_id = '" +
+                    rule["sensor_id"] + "' and time > now() - 2h")
+                print average
         # TODO: store this average moisture value as the rule's 'threshold' property
 
 def getInfluxClient():
@@ -35,6 +37,10 @@ def getInfluxClient():
         Config.Configuration().influxdbUsername,
         Config.Configuration().influxdbPassword,
         'dionysus_readings')
+    print "influxclient:"
+    print influxClient
+    return influxClient
+
 
 def main():
     influxClient = getInfluxClient()
